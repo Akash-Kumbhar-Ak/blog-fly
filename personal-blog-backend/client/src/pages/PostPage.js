@@ -1,7 +1,5 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Helmet } from 'react-helmet-async';
 import apiService from "../services/apiService";
 import ReactMarkdown from "react-markdown";
 import '../markdown-styles.css';
@@ -25,7 +23,7 @@ const PostPage = () => {
             setLoading(true);
             setError(null);
             try {
-                const response = await axios.get(`http://localhost:5000/api/posts/${slug}`);
+                const response = await apiService.get(`/posts/${slug}`);
                 const post = response.data.data.post;
                 setPost(post);
 
@@ -89,15 +87,7 @@ const PostPage = () => {
     return (
         <>
             <article className="post-full">
-                <Helmet>
-                    {/* We create a dynamic title using the post's title. */}
-                    <title>{`${post.title} | My Awesome Blog`}</title>
-                    {/* We create a dynamic meta description from the post's content. */}
-                    <meta
-                        name="description"
-                        content={createMetaDescription(post.markdownContent)}
-                    />
-                </Helmet>
+
                 <h1>{post.title}</h1>
 
                 <div className="post-full-meta">
