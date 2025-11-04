@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import apiService from "../services/apiService";
 import PostListItem from "../components/PostListItem";
-import { Helmet } from 'react-helmet-async';
+
 import './HomePage.css';
 
 const HomePage = () => {
@@ -42,13 +42,7 @@ const HomePage = () => {
 
   return (
     <div className="home-page">
-       <Helmet>
-        <title>My Awesome Blog - Latest Posts</title>
-        <meta 
-          name="description" 
-          content="Welcome to My Awesome Blog. Read the latest articles on web development, technology, and more." 
-        />
-      </Helmet>
+
       <div className="hero-section">
         <h1 className="hero-title">Welcome to Our Blog</h1>
         <p className="hero-subtitle">Discover amazing stories, insights, and ideas</p>
