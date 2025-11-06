@@ -35,6 +35,12 @@ const postSchema = new mongoose.Schema(
   }
 );
 
+// Add database indexes for better performance
+postSchema.index({ slug: 1 });
+postSchema.index({ createdAt: -1 });
+postSchema.index({ categories: 1 });
+postSchema.index({ author: 1 });
+
 postSchema.pre('save', function(next) {
   // Handle field name compatibility
   if (this.markDownContent && !this.markdownContent) {
@@ -48,6 +54,11 @@ postSchema.pre('save', function(next) {
   }
   next();
 });
+
+// Add indexes for better performance
+postSchema.index({ createdAt: -1 });
+postSchema.index({ categories: 1 });
+postSchema.index({ slug: 1 });
 
 const Post = mongoose.model('Post', postSchema);
 

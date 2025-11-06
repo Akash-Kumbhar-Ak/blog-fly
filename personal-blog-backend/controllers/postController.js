@@ -39,9 +39,11 @@ exports.getAllPost = async (req, res) => {
 
     const totalPosts = await Post.countDocuments();
     const posts = await Post.find()
+      .select('title slug author createdAt categories markdownContent')
       .sort({ createdAt: -1 })
       .skip(skip)
-      .limit(limit);
+      .limit(limit)
+      .lean();
 
     res.status(200).json({
       status: 'success',
@@ -73,8 +75,8 @@ exports.getPostById = async (req, res) => {
       });
     }
 
-    let post = await Post.findOne({ slug });
-    if (!post) post = await Post.findById(slug);
+    let post = await Post.findOne({ slug }).lean();
+    if (!post) post = await Post.findById(slug).lean();
 
     if (!post) {
       return res.status(404).json({
@@ -108,7 +110,9 @@ exports.getPostsByCategory = async (req, res) => {
     // contains the string value of 'categoryName'.
     // Mongoose is smart enough to search for a value within the array.
     const posts = await Post.find({ categories: categoryName })
-      .sort({ createdAt: -1 }); // Optional: sort the results by newest first.
+      .select('title slug author createdAt categories markdownContent')
+      .sort({ createdAt: -1 })
+      .lean();
 
     // 3. If no posts are found for a category, Mongoose returns an empty array.
     // This is a valid result, not an error. We simply return the empty array.

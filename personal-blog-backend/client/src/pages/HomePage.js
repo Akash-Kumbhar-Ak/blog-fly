@@ -16,7 +16,7 @@ const HomePage = () => {
     const fetchPosts = async () => {
       setLoading(true);
       try {
-        const response = await apiService.get(`/posts?page=${currentPage}&limit=6`);
+        const response = await apiService.get(`/posts?page=${currentPage}&limit=3`);
         setPosts(response.data.data.posts);
         setTotalPages(response.data.totalPages);
         setTotalPosts(response.data.totalPosts);
@@ -37,7 +37,12 @@ const HomePage = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  if (loading) return <div>Loading posts...</div>;
+  if (loading) return (
+    <div className="loading-container">
+      <div className="loading-spinner"></div>
+      <p>Loading posts...</p>
+    </div>
+  );
   if (error) return <div style={{ color: "red" }}>{error}</div>;
 
   return (
