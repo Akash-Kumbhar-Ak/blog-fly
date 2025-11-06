@@ -22,8 +22,14 @@ const HomePage = () => {
         setTotalPosts(response.data.totalPosts);
         setError(null);
       } catch (error) {
-        setError("Failed to fetch posts from the server");
         console.error("Error fetching posts:", error);
+        if (error.code === 'NETWORK_ERROR' || error.message.includes('Network Error')) {
+          setError("Network error. Please check your connection and try again.");
+        } else if (error.response?.status === 500) {
+          setError("Server error. Please try again in a few moments.");
+        } else {
+          setError(`Failed to fetch posts: ${error.response?.data?.message || error.message}`);
+        }
       } finally {
         setLoading(false);
       }
