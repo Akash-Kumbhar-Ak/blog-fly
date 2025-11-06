@@ -1,5 +1,12 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+
+// Debug component to show current route
+function RouteDebug() {
+  const location = useLocation();
+  console.log('Current route:', location.pathname);
+  return null;
+}
 
 import HomePage from "./pages/HomePage";
 import PostPage from "./pages/PostPage";
@@ -20,6 +27,7 @@ function App() {
       <div className="App">
         <Navbar />
         <main style={{ padding: '1rem' }}>
+          <RouteDebug />
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/post/:slug" element={<PostPage />} />
@@ -29,6 +37,7 @@ function App() {
           
 
             <Route path="/admin/login" element={<LoginPage />} />
+            <Route path="/admin" element={<LoginPage />} />
 
             <Route path="/admin/dashboard" element={
               <ProtectedRoute>
