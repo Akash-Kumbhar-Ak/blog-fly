@@ -47,6 +47,13 @@ function App() {
                   <EditPost />
                 </ProtectedRoute>
               } />
+            <Route path="*" element={
+              <div style={{textAlign: 'center', padding: '2rem'}}>
+                <h2>Page Not Found</h2>
+                <p>The page you're looking for doesn't exist.</p>
+                <a href="/">Go Home</a>
+              </div>
+            } />
           </Routes>
         </main>
       </div>
