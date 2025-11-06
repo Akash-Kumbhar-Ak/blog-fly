@@ -4,6 +4,11 @@ services:
     env: static
     buildCommand: npm install --legacy-peer-deps && npm run build
     staticPublishPath: ./build
+    headers:
+      - path: /*
+        headers:
+          X-Frame-Options: DENY
+          X-Content-Type-Options: nosniff
     routes:
       - type: rewrite
         source: /*
