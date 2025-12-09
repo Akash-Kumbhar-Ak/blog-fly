@@ -14,12 +14,35 @@ const HomePage = () => {
 
   useEffect(() => {
     const fetchPosts = async () => {
+      const cacheKey = `posts_page_${currentPage}`;
+      const cachedData = localStorage.getItem(cacheKey);
+      const cacheTime = localStorage.getItem(`${cacheKey}_time`);
+      const now = Date.now();
+      
+      if (cachedData && cacheTime && (now - parseInt(cacheTime)) < 300000) {
+        const data = JSON.parse(cachedData);
+        setPosts(data.posts);
+        setTotalPages(data.totalPages);
+        setTotalPosts(data.totalPosts);
+        setLoading(false);
+        return;
+      }
+      
       setLoading(true);
       try {
         const response = await apiService.get(`/posts?page=${currentPage}&limit=3`);
-        setPosts(response.data.data.posts);
-        setTotalPages(response.data.totalPages);
-        setTotalPosts(response.data.totalPosts);
+        const data = {
+          posts: response.data.data.posts,
+          totalPages: response.data.totalPages,
+          totalPosts: response.data.totalPosts
+        };
+        
+        localStorage.setItem(cacheKey, JSON.stringify(data));
+        localStorage.setItem(`${cacheKey}_time`, now.toString());
+        
+        setPosts(data.posts);
+        setTotalPages(data.totalPages);
+        setTotalPosts(data.totalPosts);
         setError(null);
       } catch (error) {
         console.error("Error fetching posts:", error);

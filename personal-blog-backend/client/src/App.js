@@ -1,5 +1,14 @@
 import React from "react";
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import HomePage from "./pages/HomePage";
+import PostPage from "./pages/PostPage";
+import LoginPage from "./pages/LoginPage";
+import AdminDashboard from "./pages/AdminDashboard";
+import CreatePost from "./pages/CreatePost";
+import EditPost from "./pages/EditPost";
+import Navbar from "./components/Navbar";
+import CategoryPage from "./pages/CategoryPage";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 // Debug component to show current route
 function RouteDebug() {
@@ -7,20 +16,6 @@ function RouteDebug() {
   console.log('Current route:', location.pathname);
   return null;
 }
-
-import HomePage from "./pages/HomePage";
-import PostPage from "./pages/PostPage";
-import LoginPage from "./pages/LoginPage";
-import AdminDashboard from "./pages/AdminDashboard";
-
-import CreatePost from "./pages/CreatePost";
-import EditPost from "./pages/EditPost";
-
-import Navbar from "./components/Navbar";
-
-import CategoryPage from "./pages/CategoryPage";
-
-import ProtectedRoute from "./components/ProtectedRoute";
 function App() {
   return (
     <BrowserRouter>
